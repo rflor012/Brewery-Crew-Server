@@ -42,7 +42,7 @@ breweryRouter.post('/breweries/create', (req, res, next) => {
     hours:        req.body.hours,
     beers:        req.body.beers
   })
-  
+
   newBrewery.save()
   .then((response)=>{
 
@@ -63,7 +63,7 @@ breweryRouter.post('/breweries/create', (req, res, next) => {
     })
     .catch(err => (err))
     })
-  .catch(err => res.json(err)) 
+  .catch(err => res.json(err))
   })
 
 
@@ -77,6 +77,19 @@ breweryRouter.get('/breweries/:id', (req, res , next)=>{
   .catch((err)=>{
     res.json(err)
   });
+});
+
+//beers from the selected Brewery
+breweryRouter.get('/breweries/:id/beers', (req, res, next)=>{
+  const id = req.params.id;
+    Beer.find({brewery: id})
+    .then((beersFromDB)=>{
+      console.log('The beers from the Database', beersFromDB);
+      res.json(beersFromDB);
+    })
+    .catch((err)=>{
+      res.json(err);
+    });
 });
 
 
